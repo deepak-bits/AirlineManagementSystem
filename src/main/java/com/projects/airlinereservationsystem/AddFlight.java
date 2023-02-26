@@ -33,6 +33,7 @@ public class AddFlight extends javax.swing.JInternalFrame {
     Connection con;
     PreparedStatement pre;
     
+    // Function to generate new Flight IDs everytime
     private void AutoID() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -74,9 +75,9 @@ public class AddFlight extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         fare = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        addBtn = new javax.swing.JButton();
         date = new com.toedter.calendar.JDateChooser();
-        jButton3 = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         duration = new javax.swing.JTextField();
@@ -111,17 +112,17 @@ public class AddFlight extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Date");
 
-        jButton2.setText("Add");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        addBtn.setText("Add");
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                addBtnActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Cancel");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                cancelBtnActionPerformed(evt);
             }
         });
 
@@ -162,16 +163,17 @@ public class AddFlight extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel6))
                                 .addGap(94, 94, 94)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                                    .addComponent(duration)
-                                    .addComponent(seats))
-                                .addGap(90, 90, 90))))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(duration, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                                        .addComponent(seats))
+                                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(69, 69, 69))))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(288, 288, 288)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(167, 167, 167)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -208,8 +210,8 @@ public class AddFlight extends javax.swing.JInternalFrame {
                     .addComponent(fare, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(87, 87, 87)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(85, Short.MAX_VALUE))
         );
 
@@ -224,7 +226,7 @@ public class AddFlight extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fareActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         try {
             // TODO add your handling code here:
             String FlightID = flightId.getText();
@@ -262,15 +264,15 @@ public class AddFlight extends javax.swing.JInternalFrame {
             fare.setText("");
             seats.setText("");
             duration.setText("");
-            date.cleanup();
+            date.setDate(null);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AddFlight.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(AddFlight.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_addBtnActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         // TODO add your handling code here:
 //        flightId.setText("");
         flightName.setText("");
@@ -279,20 +281,20 @@ public class AddFlight extends javax.swing.JInternalFrame {
         fare.setText("");
         seats.setText("");
         duration.setText("");
-        date.cleanup();
-    }//GEN-LAST:event_jButton3ActionPerformed
+        date.setDate(null);
+    }//GEN-LAST:event_cancelBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addBtn;
     private javax.swing.JTextField arrival;
+    private javax.swing.JButton cancelBtn;
     private com.toedter.calendar.JDateChooser date;
     private javax.swing.JTextField departure;
     private javax.swing.JTextField duration;
     private javax.swing.JTextField fare;
     private javax.swing.JTextField flightId;
     private javax.swing.JTextField flightName;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

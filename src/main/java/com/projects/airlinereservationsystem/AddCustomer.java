@@ -33,6 +33,7 @@ public class AddCustomer extends javax.swing.JInternalFrame {
     Connection con;
     PreparedStatement pre;
     
+    // function to get right username 
     private void AutoID() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -64,7 +65,7 @@ public class AddCustomer extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel6 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
         nic = new javax.swing.JTextField();
         dob = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -84,7 +85,7 @@ public class AddCustomer extends javax.swing.JInternalFrame {
         passport = new javax.swing.JTextField();
         contact = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        addBtn = new javax.swing.JButton();
 
         setClosable(true);
         setResizable(true);
@@ -92,10 +93,10 @@ public class AddCustomer extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Address");
 
-        jButton2.setText("Cancel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cancelBtnActionPerformed(evt);
             }
         });
 
@@ -148,10 +149,10 @@ public class AddCustomer extends javax.swing.JInternalFrame {
 
         jLabel5.setText("NIC ID");
 
-        jButton1.setText("Add");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        addBtn.setText("Add");
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addBtnActionPerformed(evt);
             }
         });
 
@@ -200,9 +201,9 @@ public class AddCustomer extends javax.swing.JInternalFrame {
                                         .addComponent(contact, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(dob, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGap(68, 68, 68)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -250,8 +251,8 @@ public class AddCustomer extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(96, 96, 96))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -279,9 +280,9 @@ public class AddCustomer extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_firstNameActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         try {
-            // TODO add your handling code here:
+            // Fetch all the data from text fields when add btn is clicked
             String CustID = customerId.getText();
             String FirstName = firstName.getText();
             String LastName = lastName.getText();
@@ -290,6 +291,7 @@ public class AddCustomer extends javax.swing.JInternalFrame {
             String Contact = contact.getText();
             String Address = address.getText();
             String Gender;
+            // Set the value of Gender variable
             if(male.isSelected()) {
                 Gender = "Male";
             } else {
@@ -298,9 +300,14 @@ public class AddCustomer extends javax.swing.JInternalFrame {
             DateFormat da = new SimpleDateFormat("yyyy-MM-dd");
             String DoB = da.format(dob.getDate());
             
+            // connect with MySQL
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/ReservationSystem","root","");
+            
+            // construct sql query
             pre = con.prepareStatement("Insert into Customer(CustID, FirstName, LastName, PassportID, NicID, DoB, Contact, Address, Gender) values (?,?,?,?,?,?,?,?,?)");
+            
+            // set the variable value in the above sql query string
             pre.setString(1, CustID);
             pre.setString(2, FirstName);
             pre.setString(3, LastName);
@@ -311,10 +318,14 @@ public class AddCustomer extends javax.swing.JInternalFrame {
             pre.setString(8, Address);
             pre.setString(9, Gender);
             
+            // execute query and show dialog message box
             pre.executeUpdate();
             JOptionPane.showMessageDialog(null, "Customer Added Successfully");
             
+            // call this function to generate new valid ID, so that now further new users can be added
             AutoID();
+            
+            // reset all the form buttons
             firstName.setText("");
             lastName.setText("");
             passport.setText("");
@@ -326,17 +337,17 @@ public class AddCustomer extends javax.swing.JInternalFrame {
             } else {
                 female.setSelected(false);
             }
-            dob.cleanup();
+            dob.setDate(null);
                         
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AddCustomer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(AddCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_addBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        // reset all the text fields when user clicks on Cancel btn
         firstName.setText("");
         lastName.setText("");
         passport.setText("");
@@ -349,19 +360,19 @@ public class AddCustomer extends javax.swing.JInternalFrame {
             female.setSelected(false);
         }
         
-        dob.cleanup();
-    }//GEN-LAST:event_jButton2ActionPerformed
+        dob.setDate(null);
+    }//GEN-LAST:event_cancelBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addBtn;
     private javax.swing.JTextArea address;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JTextField contact;
     private javax.swing.JTextField customerId;
     private com.toedter.calendar.JDateChooser dob;
     private javax.swing.JRadioButton female;
     private javax.swing.JTextField firstName;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

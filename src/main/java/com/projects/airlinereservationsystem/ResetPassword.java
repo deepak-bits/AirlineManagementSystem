@@ -40,7 +40,7 @@ public class ResetPassword extends javax.swing.JFrame {
         userid = new javax.swing.JTextField();
         username = new javax.swing.JTextField();
         password = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        updateBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,10 +56,10 @@ public class ResetPassword extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         jLabel4.setText("New Password");
 
-        jButton1.setText("Update");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        updateBtn.setText("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                updateBtnActionPerformed(evt);
             }
         });
 
@@ -74,7 +74,7 @@ public class ResetPassword extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(200, 200, 200))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(417, 417, 417))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,19 +108,15 @@ public class ResetPassword extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(68, 68, 68)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(91, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-//        JOptionPane.showMessageDialog(null, "Credential Updated");
-//        LoginWindow login = new LoginWindow();
-//        login.setVisible(true);
-//        this.setVisible(false);
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        // fetch data from all the text fields
         String UserID = userid.getText();
         String Username = username.getText();
         String Password = password.getText();
@@ -131,23 +127,34 @@ public class ResetPassword extends javax.swing.JFrame {
         try {
             Class.forName("com.mysql.jdbc.Driver"); // JDBC driver acts like the bridge
             con = DriverManager.getConnection("jdbc:mysql://localhost/ReservationSystem", "root", "");
+            
+            // form the SQL query
             pre = con.prepareStatement("Select * from Admin where UserID = ?");
+            
+            // set variable value in the above query string
             pre.setString(1, UserID);
            
+            // execute the above created query
             ResultSet rs = pre.executeQuery();
+            
+ 
             if(rs.next() == false) {
+                // reset all the fields and show error message if the given userID is not there in the DB
                 JOptionPane.showMessageDialog(null, "User does not exist");
                 userid.setText("");
                 username.setText("");
                 password.setText("");
             } else {
+                // if that user is there, then simply update the new username and new password
                 pre = con.prepareStatement("Update Admin Set Username=?, Password=? where UserID=?");
                 pre.setString(1, Username);
                 pre.setString(2, Password);
                 pre.setString(3, UserID);
                 pre.executeUpdate();
                 
+                // show message on successful update
                 JOptionPane.showMessageDialog(null, "Username and Password updated successfully!!");
+                // take the user back to login window, so that they can login again
                 LoginWindow login = new LoginWindow();
                 login.setVisible(true);
                 this.setVisible(false);
@@ -158,7 +165,7 @@ public class ResetPassword extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_updateBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,12 +203,12 @@ public class ResetPassword extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField password;
+    private javax.swing.JButton updateBtn;
     private javax.swing.JTextField userid;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
