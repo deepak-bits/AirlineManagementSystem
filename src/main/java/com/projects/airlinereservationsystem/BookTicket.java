@@ -73,7 +73,7 @@ public class BookTicket extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        searchFlightBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         flightTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -117,10 +117,10 @@ public class BookTicket extends javax.swing.JInternalFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Search Flight");
 
-        jButton1.setText("Search");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        searchFlightBtn.setText("Search");
+        searchFlightBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                searchFlightBtnActionPerformed(evt);
             }
         });
 
@@ -144,7 +144,7 @@ public class BookTicket extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jButton1)))
+                        .addComponent(searchFlightBtn)))
                 .addGap(133, 133, 133))
         );
         jPanel1Layout.setVerticalGroup(
@@ -161,7 +161,7 @@ public class BookTicket extends javax.swing.JInternalFrame {
                     .addComponent(arrival, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(departure, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(searchFlightBtn)
                 .addGap(51, 51, 51))
         );
 
@@ -349,13 +349,13 @@ public class BookTicket extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void searchFlightBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFlightBtnActionPerformed
         try {
-            // TODO add your handling code here:
-            
+            // fetch arrival and departure details from the combo boxes
             String Arrival = arrival.getSelectedItem().toString();
             String Departure = departure.getSelectedItem().toString();
             
+            // configure MySQL connection and execute query
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/ReservationSystem","root","");
             pre = con.prepareStatement("Select * from Flight where Arrival=? and Departure=?");
@@ -377,6 +377,7 @@ public class BookTicket extends javax.swing.JInternalFrame {
                     v2.add(rs.getString("Date"));
                     v2.add(rs.getString("Duration"));
                 }
+                System.out.println("The Vector is: " + v2);
                 DFT.addRow(v2);
             }
         } catch (ClassNotFoundException ex) {
@@ -385,8 +386,9 @@ public class BookTicket extends javax.swing.JInternalFrame {
             Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_searchFlightBtnActionPerformed
 
+    // Function to set the fare if any particular row is selected
     private void flightTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_flightTableMouseClicked
         try {
             // TODO add your handling code here:
@@ -440,12 +442,14 @@ public class BookTicket extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
-        // TODO add your handling code here:
+        // fetch fare and number of tickets
         int Fare = Integer.valueOf(fare.getText());
         int num = Integer.valueOf(numberOfTickets.getText());
         
+        // calculate total fare
         int ans = Fare * num;
         
+        // set the total fare with above calculated value
         totalFare.setText(String.valueOf(ans));
         
     }//GEN-LAST:event_calculateBtnActionPerformed
@@ -486,7 +490,12 @@ public class BookTicket extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bookBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        // TODO add your handling code here:
+        // reset all the data fields
+        firstName.setText("");
+        lastName.setText("");
+        contact.setText("");
+        dob.setDate(null);
+        contact.setText("");
     }//GEN-LAST:event_cancelBtnActionPerformed
 
 
@@ -502,7 +511,6 @@ public class BookTicket extends javax.swing.JInternalFrame {
     private javax.swing.JTextField fare;
     private javax.swing.JTextField firstName;
     private javax.swing.JTable flightTable;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -520,6 +528,7 @@ public class BookTicket extends javax.swing.JInternalFrame {
     private javax.swing.JTextField lastName;
     private javax.swing.JTextField numberOfTickets;
     private javax.swing.JButton searchBtn;
+    private javax.swing.JButton searchFlightBtn;
     private javax.swing.JTextField ticketId;
     private javax.swing.JTextField totalFare;
     // End of variables declaration//GEN-END:variables

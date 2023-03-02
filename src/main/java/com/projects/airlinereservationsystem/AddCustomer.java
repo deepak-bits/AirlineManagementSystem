@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 
 /**
@@ -64,6 +65,7 @@ public class AddCustomer extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel6 = new javax.swing.JLabel();
         cancelBtn = new javax.swing.JButton();
         nic = new javax.swing.JTextField();
@@ -291,6 +293,11 @@ public class AddCustomer extends javax.swing.JInternalFrame {
             String Contact = contact.getText();
             String Address = address.getText();
             String Gender;
+            
+            ButtonGroup group = new ButtonGroup();
+            group.add(male);
+            group.add(female);
+            
             // Set the value of Gender variable
             if(male.isSelected()) {
                 Gender = "Male";
@@ -367,6 +374,7 @@ public class AddCustomer extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JTextArea address;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JTextField contact;
     private javax.swing.JTextField customerId;

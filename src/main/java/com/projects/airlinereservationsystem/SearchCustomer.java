@@ -50,7 +50,7 @@ public class SearchCustomer extends javax.swing.JInternalFrame {
         searchBtn = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
         customerId = new javax.swing.JTextField();
         nic = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -97,10 +97,10 @@ public class SearchCustomer extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel1.setText("Customer ID");
 
-        jButton2.setText("Cancel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cancelBtnActionPerformed(evt);
             }
         });
 
@@ -171,7 +171,7 @@ public class SearchCustomer extends javax.swing.JInternalFrame {
                                             .addGap(43, 43, 43)
                                             .addComponent(female))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(contact, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(dob, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(layout.createSequentialGroup()
@@ -220,7 +220,7 @@ public class SearchCustomer extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -286,8 +286,8 @@ public class SearchCustomer extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        // reset all the text fields
         firstName.setText("");
         lastName.setText("");
         passport.setText("");
@@ -300,8 +300,8 @@ public class SearchCustomer extends javax.swing.JInternalFrame {
             female.setSelected(false);
         }
 
-        dob.cleanup();
-    }//GEN-LAST:event_jButton2ActionPerformed
+        dob.setDate(null);
+    }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void nicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nicActionPerformed
         // TODO add your handling code here:
@@ -314,12 +314,12 @@ public class SearchCustomer extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea address;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JTextField contact;
     private javax.swing.JTextField customerId;
     private com.toedter.calendar.JDateChooser dob;
     private javax.swing.JRadioButton female;
     private javax.swing.JTextField firstName;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
